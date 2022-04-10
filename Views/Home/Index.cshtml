@@ -1,0 +1,102 @@
+﻿@model IEnumerable<CustomerOrder2.Models.CustomerInfo>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<head>
+    <link rel="stylesheet" href="~/css/font.css" />
+</head>
+
+<p id="CreateFont">
+    @Html.ActionLink("Add New Customer", "Create")
+</p>
+
+<table class="table">
+    <!--顯示欄位名稱-->
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Mail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+    </tr>
+
+    <!--顯示所有資訊-->
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.ActionLink("編輯", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("刪除", "Delete", new { id = item.Id }) |
+
+                @* 檢視客戶資訊改用原生寫法 *@
+                @* 詳細可查看網站 https://www.runoob.com/js/js-void.html *@
+                @*@Html.ActionLink("檢視", "GetCusList", new { id = item.Id }, new { @class = "btn btn-primary" })*@
+                <a href="javascript:void(0);" class="btnViewCusDetail" data-customer-id=@item.Id>檢視</a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<!--匯出 Excel-->
+<div class="mb-4">
+    <button onclick="location.href = '@Url.ActionLink("CustomerExport", "Home")'"
+            class="btn btn-blue waves-effect waves-light mr-1">
+        Export To Excel
+    </button>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".btnViewCusDetail").click(function () {
+            var strCusId = $(this).attr("data-customer-id");
+            GetCustomerDetail(strCusId);
+        });
+    });
+
+    function GetCustomerDetail(strCusId) {
+        $.ajax({
+            url: "/Home/GetCustomerDetail",
+            type: "Get",
+            dataType: 'json',
+            data: { Id: strCusId },  // 傳送資料
+            cache: false,            // 取消Ajax快取、停止瀏覽器緩存加載
+            beforeSend: function () {
+                //ShowLoading();
+            },
+            complete: function () {
+                // HideLoading();
+            }
+        })
+            .done(function (data) {
+                var strShowMsg = "";
+                strShowMsg += "姓名 : " + data.customer.Name + "\n";
+                strShowMsg += "E-Mail : " + data.customer.Mail + "\n";
+                strShowMsg += "寄送地址 : " + data.customer.Address + "\n";
+                strShowMsg += "建立時間 : " + data.customer.CreateTime;
+                alert(strShowMsg);
+                //console.log(data);
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+            });
+    }
+
+</script>

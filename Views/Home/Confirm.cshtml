@@ -1,0 +1,46 @@
+﻿@model CustomerOrder2.Models.OrderInfo
+
+@{
+    ViewData["Title"] = "確認您的訂單 >.<";
+}
+
+<div>
+    <h4>@ViewData["Title"]</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product1)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product1)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Product2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Product2)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CustomerId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OrderTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OrderTime)
+        </dd>
+    </dl>
+</div>
+<div>
+    <!--<a asp-action="Order" asp-route-id="@Model.OrderId">我想修改</a>-->
+    <a asp-action="Index"> OK！</a>
+</div>

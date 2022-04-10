@@ -1,0 +1,44 @@
+﻿
+
+<!--html-->
+<!DOCTYPE html>
+<html>
+<body>
+    <button class="btn btn-primary" id="btnAjaxDemo" >Get JSON by Ajax</button>
+
+</body>
+</html>
+
+<!--js-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    var apiUrl = "https://localhost:44381/Home/GetCustomerList"
+
+    $.ajaxSetup({ cache: false }); // 取消Ajax快取、停止瀏覽器緩存加載
+
+    $(document).ready(function () {
+        $('#btnAjaxDemo').on('click', function (e) {
+            $.ajax({
+                type: 'POST', // 請求方法
+                url: apiUrl, // 請求網址
+                // async: true, // 異步請求
+                dataType: 'json', // 返回資料類型
+                data: {}, // 傳送資料
+                beforeSend: function (jqXHR) { // 發送請求前執行
+                    // ShowLoading();
+                },
+                success: function (data, textStatus, jqXHR) { }, // 成功後執行
+                error: function (xhr, status, error) { }, // 失敗後執行
+                complete: function (xhr, status, error) { // 完成後執行
+                    // HideLoading();
+                },
+            }).done(function (data, textStatus, jqXHR) { // 無論成功、失敗皆執行
+                console.log(data.cusList);               // 把結果輸出到#result容器
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+            });
+        });
+    });
+</script>
+
+

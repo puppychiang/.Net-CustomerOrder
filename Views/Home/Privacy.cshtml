@@ -1,0 +1,36 @@
+﻿
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <h3>ViewData Test</h3>
+    <ul>
+        <li>店    名：@ViewData["ShopName"]</li>
+        <li>成立時間：@((int)ViewData["Establishment"]-1) 年</li>
+    </ul>
+</p>
+
+<p>
+    <h3>ViewBag Test</h3>
+    <ul>
+        <li>聯絡資訊：@ViewBag.ContactUs</li>
+        <li>員工人數：@ViewBag.Employees 人</li>
+    </ul>
+</p>
+
+<p>
+    <h3>ViewData.Model Test</h3>
+    <ul>
+        @foreach (var product in Model) {
+            <li>@product</li>
+        }
+    </ul>
+</p>
+
+
+    <p>
+        YouTube：
+        <a href="https://www.youtube.com/">點我傳送</a>
+    </p>
+
+
+
